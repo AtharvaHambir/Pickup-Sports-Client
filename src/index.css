@@ -1,0 +1,8 @@
+main.container {
+  max-width: 960px; /* This will now work as intended. */
+}
+
+/* A small tweak for better spacing below the navigation bar */
+nav {
+  margin-bottom: 2rem;
+}
