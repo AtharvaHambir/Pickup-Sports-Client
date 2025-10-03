@@ -21,7 +21,7 @@ function CreateGame() {
 
     try {
       // We are pointing to your local backend server for testing
-      const response = await axios.post('http://localhost:5001/api/games', formData);
+      const response = await axios.post('https://nu-pickup-sports-api-9296628194a6.herokuapp.com/api/games', formData);
       
       const newGameId = response.data.shareableId;
       navigate(`/game/${newGameId}`);

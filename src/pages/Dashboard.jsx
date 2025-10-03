@@ -10,7 +10,7 @@ function Dashboard() {
     const fetchGames = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5001/api/games');
+        const response = await axios.get('https://nu-pickup-sports-api-9296628194a6.herokuapp.com/api/games');
         setGames(response.data);
       } catch (error) {
         console.error('Error fetching games', error);

@@ -6,3 +6,28 @@ main.container {
 nav {
   margin-bottom: 2rem;
 }
+
+/* In client/src/index.css */
+
+body {
+  /* The Gradient: A very dark blue/purple that brightens slightly in the center. */
+  background: radial-gradient(ellipse at center, 
+    #1c2130 0%, 
+    #0c0d14 100%
+  );
+  
+  /* The Animation: We name it 'gradientAnimation', make it last 15 seconds,
+     run in a loop forever, and alternate directions for a smooth effect. */
+  background-size: 200% 200%;
+  animation: gradientAnimation 15s ease infinite alternate;
+}
+
+/* This is the animation itself. We just move the background's center point. */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

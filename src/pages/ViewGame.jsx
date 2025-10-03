@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function ViewGame() {
+  // STEP 1: DEFINE YOUR LIVE URL HERE
+  const API_URL = "https://nu-pickup-sports-api-9296628194a6.herokuapp.com";
+
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const { shareableId } = useParams();
@@ -12,7 +15,8 @@ function ViewGame() {
   const fetchGame = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5001/api/games/${shareableId}`);
+      // STEP 2: USE THE API_URL CONSTANT
+      const response = await axios.get(`${API_URL}/api/games/${shareableId}`);
       setGame(response.data);
       setError('');
     } catch (err) {
@@ -34,7 +38,8 @@ function ViewGame() {
       return;
     }
     try {
-      const response = await axios.put(`http://localhost:5001/api/games/${shareableId}/join`, { name: playerName });
+      // STEP 2: USE THE API_URL CONSTANT
+      const response = await axios.put(`${API_URL}/api/games/${shareableId}/join`, { name: playerName });
       setGame(response.data);
       setPlayerName('');
       setError('');
@@ -43,6 +48,21 @@ function ViewGame() {
       setError(err.response?.data?.message || 'Could not join the game.');
     }
   };
+
+  const handleRemovePlayer = async (playerName) => {
+    if (window.confirm(`Are you sure you want to remove ${playerName}?`)) {
+        try {
+            // STEP 2: USE THE API_URL CONSTANT
+            const response = await axios.put(`${API_URL}/api/games/${shareableId}/remove`, { playerName });
+            setGame(response.data);
+            setError('');
+        } catch (err) {
+            console.error('Error removing player', err);
+            setError('Could not remove the player.');
+        }
+    }
+  };
+
 
   if (loading) {
     return <p>Loading game details...</p>;
@@ -56,16 +76,12 @@ function ViewGame() {
 
   return (
     <>
-      {/* A cleaner header for the page */}
       <header style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <h1>{game.sport}</h1>
         <p>Game created by <strong>{game.playersJoined[0]?.name || 'Unknown'}</strong></p>
       </header>
 
-      {/* NEW: A two-column grid layout */}
       <div className="grid">
-
-        {/* Column 1: Game Details */}
         <article>
           <h3 style={{marginTop: 0}}>Details</h3>
           <ul>
@@ -74,18 +90,23 @@ function ViewGame() {
           </ul>
         </article>
 
-        {/* Column 2: Player Information & Actions */}
         <article>
           <h3 style={{marginTop: 0}}>Players</h3>
-          
           <p>{game.playersJoined.length} / {game.slots} joined</p>
-          {/* A visual progress bar for player count */}
           <progress value={game.playersJoined.length} max={game.slots}></progress>
-
           <strong>Players Joined:</strong>
           <ul>
             {game.playersJoined.map((player, index) => (
-              <li key={index}>{player.name}</li>
+              <li key={index}>
+                {player.name}
+                <button 
+                  onClick={() => handleRemovePlayer(player.name)} 
+                  style={{ marginLeft: '10px', padding: '0 5px', background: 'transparent', border: 'none', color: '#ff6b6b', cursor: 'pointer' }}
+                  title={`Remove ${player.name}`}
+                >
+                  &times;
+                </button>
+              </li>
             ))}
           </ul>
 
