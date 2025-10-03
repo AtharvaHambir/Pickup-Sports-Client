@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { sendSignInLinkToEmail } from "firebase/auth";
-import { auth } from '../firebase'; // Import our auth instance
+import { auth } from '../firebase';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -19,17 +19,17 @@ function Login() {
         return;
     }
 
-    // This object tells Firebase where to redirect the user after they click the link
     const actionCodeSettings = {
-      url: `${window.location.origin}/handle-login`, // URL must be whitelisted in Firebase console
+      // THIS IS THE CORRECTED LINE: It now correctly builds the full URL
+      // It should result in: https://atharvahambir.github.io/Pickup-Sports-Client/#/handle-login
+      url: `${window.location.origin}${window.location.pathname}#/handle-login`,
       handleCodeInApp: true,
     };
 
     try {
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      // Save the email to local storage to use it after redirection
       window.localStorage.setItem('emailForSignIn', email);
-      setMessage('Success! A login link has been sent to your email.');
+      setMessage('Success! A new login link has been sent to your email.');
     } catch (err) {
       console.error(err);
       setError('Failed to send login link. Please try again.');
@@ -38,8 +38,8 @@ function Login() {
 
   return (
     <article>
-      <h2>Welcome to Pickup Sports</h2>
-      <p>Enter your university .edu email to receive the login link.</p>
+      <h2>Welcome to Pickup Play</h2>
+      <p>Enter your university .edu email to receive a magic login link.</p>
       <form onSubmit={handleLogin}>
         <input
           type="email"
