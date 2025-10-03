@@ -1,0 +1,1 @@
+main.container{max-width:960px}nav{margin-bottom:2rem}body{background:radial-gradient(ellipse at center,#1c2130,#0c0d14);background-size:200% 200%;animation:gradientAnimation 15s ease infinite alternate}@keyframes gradientAnimation{0%{background-position:0% 50%}to{background-position:100% 50%}}
