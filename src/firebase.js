@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyClD1lfxlfbI8fWSMgrliW6tyqr0MIQKZw",
-  authDomain: "pickup-sports-7ec88.firebaseapp.com",
-  projectId: "pickup-sports-7ec88",
-  storageBucket: "pickup-sports-7ec88.firebasestorage.app",
-  messagingSenderId: "200257087307",
-  appId: "1:200257087307:web:d48e51c756a54f998aeace"
+  apiKey: import.meta.env.VITE_FIREBASE_apiKey,
+  authDomain: import.meta.env.VITE_FIREBASE_authDomain,
+  projectId: import.meta.env.VITE_FIREBASE_projectId,
+  storageBucket: import.meta.env.VITE_FIREBASE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_messagingSenderId,
+  appId: import.meta.env.VITE_FIREBASE_appId
 };
 
 // Initialize Firebase
